@@ -16,7 +16,7 @@ interface DataType {
 const Detail: FC = () => {
   const params = useParams();
   const token = "ba59c31e5eadc57fcd44f63624587250eafeead6";
-  const [data, setDatas] = useState<DataType>();
+  const [data, setData] = useState<DataType>();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [objSubmit, setObjSubmit] = useState<Partial<DataType>>({});
   const MySwal = withReactContent(Swal);
@@ -36,32 +36,22 @@ const Detail: FC = () => {
         },
       })
       .then(function (response) {
-        setDatas(response.data);
-        console.log(response.data);
+        setData(response.data);
       })
       .catch(function (error) {});
   }
 
   function handleChange(value: string, key: keyof typeof objSubmit) {
-    let temp = { ...objSubmit }; // duplikat state objSubmit yang nantinya akan dimutasi nilainya
+    let temp = { ...objSubmit };
     temp[key] = value;
-    // temp["username"] = data.username;
     setObjSubmit(temp);
-    console.log("temp", temp);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     const { id } = params;
 
     event.preventDefault();
-    // const formData = new FormData();
-    // let key: keyof typeof objSubmit;
-    // console.log(objSubmit);
-    // for (key in objSubmit) {
-    //   formData.append(key, objSubmit[key]);
-    //   console.log(key, objSubmit[key]);
-    // }
-    // console.log(formData);
+
     axios
       .post(`tasks/${id}`, objSubmit, {
         headers: {
